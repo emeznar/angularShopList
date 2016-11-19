@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Angular Shopping List</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-2.2.3.js"></script>
+    <!-- include angularjs file from cdn -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <!--include my css -->
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+
+</head>
+
+<body>
+    <!--define the app in ng-->
+    <div ng-app="myShoppingListApp">
+        <!--refer controller for app -->
+        <div ng-controller="firstController" class="content">
+            <div class="form-group">
+                <h2>Shopping List</h2>
+                <input type="text" id="textbox" ng-model="new_item" placeholder="Add Item" ng-class='{danger: form_error}'>
+                <button ng-click="addItem()">Add Item</button>
+            </div>
+            <br><br>
+            <div style="background-color:#ffd633;padding:10px;">
+                <div style="text-align:center;background-color:none;">
+                    <!--add text box to search for item -->
+                    <label>Search: <input ng-model="searchText"></label>
+                </div>
+                <!-- trash can for deleting all items-->
+                <p class="fa fa-trash" ng-click="deleteItem($index)"> Delete List</p>
+                <hr>
+                <ol>
+                    <!-- ng way of looping through ol - repeat will loop through each item and display -->
+                    <li ng-repeat="item in todo_lists | filter:searchText track by $index ">
+                        <!--add strikethrough and auto cap word for each item in list-->
+                        <span class="item" ng-class="{striken : item_striken$index}"> {{ item | capitalize }} </span> &nbsp;
+                        <div class="right">
+                            <!--show or hide strikethrough based on current condition (checked)-->
+                            <i class="fa fa-check" ng-show="!item_striken$index" ng-click="item_striken$index = !item_striken$index"></i>
+                            <i class="fa fa-times" ng-show="item_striken$index" ng-click="item_striken$index = !item_striken$index"></i> &nbsp;
+                        </div>
+                        <div>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"></script>
+    <script src="shopping_list.js"></script>
+
+</body>
+
+</html>
